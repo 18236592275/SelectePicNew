@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void selectFromPic(View view) {
         CropBean cropBean = new CropBean();
+        cropBean.setMaxSize(500);
         initTakePhoto(cropBean);
 
         mTakePhotoPopupWindow.checkPhotoPermission();
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void selectFromCamera(View view) {
         CropBean cropBean = new CropBean();
+        cropBean.setMaxSize(500);
         initTakePhoto(cropBean);
 
         mTakePhotoPopupWindow.checkCameraPermission();
