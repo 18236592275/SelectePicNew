@@ -48,13 +48,6 @@ public class RNTakePhotoPopupWindow {
     public File mInputFile;
     public File mOutputFile = null;
 
-    //剪裁图片宽高比
-    private int mAspectX = 1;
-    private int mAspectY = 1;
-    //剪裁图片大小
-    private int mOutputX = 800;
-    private int mOutputY = 480;
-
     public boolean mShouldCrop = false;//是否要裁剪（默认不裁剪）
     private boolean noLoading = false;//是否要加载了loading（默认显示）
 
