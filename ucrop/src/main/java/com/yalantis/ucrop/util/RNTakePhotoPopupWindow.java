@@ -215,7 +215,7 @@ public class RNTakePhotoPopupWindow {
 
                 case REQ_CROP_PHOTO://crop
                     if (data != null) {
-                    } else {
+                        Log.e(TAG, "attachToActivityForResult: =>>>>>data is not null");
                         final Uri resultUri = UCrop.getOutput(data);
                         File file = new File(resultUri.getPath());
                         if (resultUri != null) {
