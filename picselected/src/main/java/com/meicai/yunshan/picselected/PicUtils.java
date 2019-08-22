@@ -16,10 +16,21 @@ import java.util.List;
  */
 public class PicUtils {
     private static String TAG = PicUtils.class.getSimpleName();
+    private Activity mActivity;
+    private boolean isCrop;
+    private int maxSize;
+    private static TakePhotoListener listener;
 
-    public static void selectFromPic(Activity activity, boolean isCrop, int maxSize) {
+    public PicUtils(Activity mActivity, boolean isCrop, int maxSize, TakePhotoListener listener) {
+        this.mActivity = mActivity;
+        this.isCrop = isCrop;
+        this.maxSize = maxSize;
+        this.listener = listener;
+    }
+
+    public void selectFromPic() {
         // 进入相册 以下是例子：用不到的api可以不写
-        PictureSelector.create(activity)
+        PictureSelector.create(mActivity)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .theme(R.style.picture_white_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(1)// 最大图片选择数量 int
@@ -62,8 +73,8 @@ public class PicUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
-    public static void takePhoto(Activity activity, boolean isCrop, int maxSize) {
-        PictureSelector.create(activity)
+    public void takePhoto() {
+        PictureSelector.create(mActivity)
                 .openCamera(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .theme(R.style.picture_white_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(1)// 最大图片选择数量 int
@@ -77,7 +88,7 @@ public class PicUtils {
                 .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
 //                .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
-//                .setOutputCameraPath("/CustomPath")// 自定义拍照保存路径,可不填
+                .setOutputCameraPath("/CustomPath")// 自定义拍照保存路径,可不填
                 .enableCrop(isCrop)// 是否裁剪 true or false
                 .compress(true)// 是否压缩 true or false
                 .glideOverride(160, 160)// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
@@ -118,6 +129,10 @@ public class PicUtils {
                     // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                    if (selectList.size() > 0) {
+                        LocalMedia media = selectList.get(0);
+                        listener.onSuccess(media.getCompressPath());
+                    }
                     for (LocalMedia media : selectList) {
                         Log.i(TAG, "压缩---->" + media.getCompressPath());
                         Log.i(TAG, "原图---->" + media.getPath());
@@ -126,5 +141,15 @@ public class PicUtils {
                     break;
             }
         }
+    }
+
+    public interface TakePhotoListener {
+        void onSuccess(String fileUrl);
+
+        void onCancel();
+
+        void onPhotoPermissionDenied();
+
+        void onTakePhotoPermissionDenied();
     }
 }

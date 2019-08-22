@@ -31,28 +31,115 @@ public class MainActivity extends Activity {
      */
 
     public void selectFromPic(View view) {
-        PicUtils.selectFromPic(this, false, 500);
+        PicUtils picUtils = new PicUtils(this, false, 500, new PicUtils.TakePhotoListener() {
+            @Override
+            public void onSuccess(String fileUrl) {
+                Log.e(TAG, "onSuccess: ======>lalallala,得到的图片===》"+fileUrl );
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onPhotoPermissionDenied() {
+
+            }
+
+            @Override
+            public void onTakePhotoPermissionDenied() {
+
+            }
+        });
+        picUtils.selectFromPic();
     }
 
     /**
      * 图库选择照片并裁减
      */
     public void selectFromPicAndCrop(View view) {
-        PicUtils.selectFromPic(this, true, 500);
+        PicUtils picUtils = new PicUtils(this, true, 500, new PicUtils.TakePhotoListener() {
+            @Override
+            public void onSuccess(String fileUrl) {
+                Log.e(TAG, "onSuccess: ======>lalallala,得到的图片===》"+fileUrl );
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onPhotoPermissionDenied() {
+
+            }
+
+            @Override
+            public void onTakePhotoPermissionDenied() {
+
+            }
+        });
+        picUtils.selectFromPic();
     }
 
     /**
      * 相机拍照
      */
     public void selectFromCamera(View view) {
-        PicUtils.takePhoto(this, false, 500);
+        PicUtils picUtils = new PicUtils(this, false, 500, new PicUtils.TakePhotoListener() {
+            @Override
+            public void onSuccess(String fileUrl) {
+                Log.e(TAG, "onSuccess: ======>lalallala,得到的图片===》"+fileUrl );
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onPhotoPermissionDenied() {
+
+            }
+
+            @Override
+            public void onTakePhotoPermissionDenied() {
+
+            }
+        });
+        picUtils.takePhoto();
     }
 
     /**
      * 相机拍照并裁剪
      */
     public void selectFromCamearAndCrop(View view) {
-        PicUtils.takePhoto(this, false, 500);
+        PicUtils picUtils = new PicUtils(this, true, 500, new PicUtils.TakePhotoListener() {
+            @Override
+            public void onSuccess(String fileUrl) {
+                Log.e(TAG, "onSuccess: ======>lalallala,得到的图片===》"+fileUrl );
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onPhotoPermissionDenied() {
+
+            }
+
+            @Override
+            public void onTakePhotoPermissionDenied() {
+
+            }
+        });
+        picUtils.takePhoto();
     }
 
 
